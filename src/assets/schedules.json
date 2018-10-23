@@ -1,0 +1,26 @@
+[
+  {
+    "staffName": "Eve Antony",
+    "title": "Test vacation",
+    "date": "2018/10/21",
+    "time": "10:00 - 13:40"
+  },
+  {
+    "staffName": "Richard Gomez",
+    "title": "Vacation 4",
+    "date": "2018/10/18",
+    "time": "15:00 - 19:00"
+  },
+  {
+    "staffName": "Charlene Maria",
+    "title": "Demo vacation",
+    "date": "2018/11/15",
+    "time": "10:00 - 11:40"
+  },
+  {
+    "staffName": "Mr. Babie",
+    "title": "Vacation 5",
+    "date": "2018/10/21",
+    "time": "16:40 - 19:00"
+  }
+]
