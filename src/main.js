@@ -4,14 +4,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from '@/store/index'
+import loginStore from '@/store/login'
 
 Vue.config.productionTip = false
 
-export const bus = new Vue();
+// export const bus = new Vue();
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
+  loginStore,
   render: h => h(App)
 })

@@ -31,9 +31,6 @@
 </template>
 
 <script>
-import { bus } from '../main'
-import ScheduleService from '@/services/ScheduleService'
-
 export default {
   name: 'AddSchedule',
   data () {
@@ -49,9 +46,9 @@ export default {
   },
 
   methods: {
-    async addSchedule() {
+    addSchedule() {
 
-      let requestBody = {
+      let newProduct = {
         staff_id: this.staff_id,
         staff_name: this.staff_name,
         title: this.title,
@@ -60,21 +57,15 @@ export default {
         time_to: this.time_to
       }
 
-      await ScheduleService.addSchedule(requestBody).then(response => {
-        this.success = response.data.data.success
-      }).catch(error => {
-        this.success = false
-      })
-
-      if(this.success) {
+      this.$store.dispatch('addSchedule', newProduct).then(() => {
         this.staff_name = ''
         this.title = ''
         this.date = ''
         this.time_from = ''
         this.time_to = ''
 
-        bus.$emit('updateScheduleList', '')
-      }
+        this.$store.dispatch('getSchedules')
+      })
     }
   }
 }
