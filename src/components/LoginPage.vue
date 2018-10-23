@@ -59,7 +59,7 @@ export default {
       })
 
       if (this.loginInfo.success) {
-        localStorage.setItem('login-info', JSON.stringify(this.loginInfo))
+        //localStorage.setItem('login-info', JSON.stringify(this.loginInfo))
         this.$router.push('/')
       } else if (this.loginInfo.success === false) {
         alert("Username or password is not correct.")

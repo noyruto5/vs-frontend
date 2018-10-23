@@ -56,7 +56,7 @@ export default {
         this.success = false
       }).finally(() => this.loading = false)
 
-      console.log(JSON.parse(localStorage.getItem('login-info')))
+      //console.log(JSON.parse(localStorage.getItem('login-info')))
     },
     formattedDate: function(date) {
       return moment(new Date(date)).format('MM/DD/YY')
