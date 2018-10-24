@@ -18,7 +18,7 @@
         <tbody>
           <tr v-for="(schedule, index) in schedules" :key="index">
             <td>{{ schedule.staff_name }}</td>
-            <td>{{ formattedDate(schedule.date) }}</td>
+            <td>{{ schedule.date }}</td>
             <td>{{ schedule.time_from }} - {{ schedule.time_to}}</td>
             <td>{{ schedule.title }}</td>
             <td>
@@ -45,11 +45,9 @@ export default {
   },
 
   methods: {
-    formattedDate: function(date) {
-      return moment(new Date(date)).format('MM/DD/YY')
-    },
     selectSchedule: function(id) {
-
+      this.$store.dispatch('setSelectedSchedule', id)
+      this.$router.push('/update')
     },
   },
 

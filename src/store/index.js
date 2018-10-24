@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import ScheduleService from '@/services/ScheduleService'
+import moment from 'moment'
 
 Vue.use(Vuex)
 
@@ -30,19 +31,33 @@ export default new Vuex.Store({
       }))
     },
 
+    async updateSchedule (context, schedule) {
+      context.commit('editSchedule', await ScheduleService.updateSchedule(schedule).then(response => {
+        return response.data.data.success
+      }))
+    },
+
     setSelectedSchedule (context, scheduleId) {
-      //let schedule = schedules.find()
-      context.commit('selectedSchedule', )
+      context.commit('selectedSchedule', scheduleId)
     }
   },
 
   mutations: { // = responsible for setting and updating the state
     setSchedules (state, schedules) {
+      schedules.forEach(el => {
+        el.date = moment(new Date(el.date)).format('YYYY-MM-DD')
+      });
       state.schedules = schedules
     },
+
     saveSchedule (state) {
     },
-    selectedSchedule (state, schedule) {
+
+    editSchedule (state) {
+    },
+
+    selectedSchedule (state, scheduleId) {
+      let schedule = state.schedules.find(item => item._id === scheduleId)
       state.selectedSchedule = schedule
     }
   }

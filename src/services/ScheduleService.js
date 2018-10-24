@@ -6,5 +6,8 @@ export default {
   },
   addSchedule (params) {
     return Api().post('api/schedule/', params)
+  },
+  updateSchedule (params) {
+    return Api().put('api/schedule/', params)
   }
 }
