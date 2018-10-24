@@ -12,6 +12,7 @@
             <th>Date</th>
             <th>Time</th>
             <th>Title</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +22,7 @@
             <td>{{ schedule.time_from }} - {{ schedule.time_to}}</td>
             <td>{{ schedule.title }}</td>
             <td>
-              <span class="fa fa-edit" @click="selectItem(index)"></span>&nbsp;
+              <span class="fa fa-edit" @click="selectSchedule(schedule._id)"></span>&nbsp;
               <span class="fa fa-remove"></span>
             </td>
           </tr>
@@ -39,7 +40,7 @@ export default {
   data () {
     return {
       loading: true,
-      selectedItem: null
+      //selectedSchedule: null
     }
   },
 
@@ -47,8 +48,8 @@ export default {
     formattedDate: function(date) {
       return moment(new Date(date)).format('MM/DD/YY')
     },
-    selectItem: function(index) {
-      this.selectedItem =  this.schedules[index]
+    selectSchedule: function(id) {
+
     },
   },
 

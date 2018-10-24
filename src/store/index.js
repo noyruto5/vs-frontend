@@ -6,11 +6,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: { // = data
-    schedules: []
+    schedules: [],
+    selectedSchedule: {}
   },
 
   getters: { // = computed properties
-
+    selectedSchedule (state, id) {
+      const schedule = state.schedules.find(schedule => schedule._id === id)
+      return schedule
+    }
   },
 
   actions: { // = methods
@@ -24,6 +28,11 @@ export default new Vuex.Store({
       context.commit('saveSchedule', await ScheduleService.addSchedule(newSchedule).then(response => {
         return response.data.data.success
       }))
+    },
+
+    setSelectedSchedule (context, scheduleId) {
+      //let schedule = schedules.find()
+      context.commit('selectedSchedule', )
     }
   },
 
@@ -32,6 +41,9 @@ export default new Vuex.Store({
       state.schedules = schedules
     },
     saveSchedule (state) {
+    },
+    selectedSchedule (state, schedule) {
+      state.selectedSchedule = schedule
     }
   }
 })
