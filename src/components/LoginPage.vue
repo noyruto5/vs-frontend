@@ -1,8 +1,8 @@
 <template>
   <div>
     <h2>Welcome to Login Page</h2>
-<!-- @submit.prevent="login" -->
-    <form autocomplete="off" >
+
+    <form autocomplete="off" @submit.prevent="login">
       <div class="form-group">
         <label for="staff_name">Staff Name: </label>
         <input ref="dropdownMenu" type="text" v-model="staffName" v-on:keyup="searchStaffs" @click="visible=!visible" class="form-control" id="staff_name" placeholder="Enter name"><br/>
@@ -25,8 +25,7 @@
 </template>
 
 <script>
-//import LoginService from '@/services/LoginService'
-
+import LoginService from '@/services/LoginService'
 export default {
   name: 'LoginPage',
   data () {
@@ -35,33 +34,33 @@ export default {
       staffName: '',
       password: '',
       staffInfo: [],
+      loginInfo: {},
       visible: false
     }
   },
-
   methods: {
-    searchStaffs () {
-      this.$loginStore.dispatch('getStaffInfo', this.staffName)
-      this.staffInfo = this.$loginStore.state.staffInfo
-      console.log(this.staffInfo)
+    async searchStaffs () {
+      this.staffInfo = []
+      this.staffInfo = await LoginService.searchStaffs(this.staffName).then(response => {
+        return response.data.data
+      }).catch(error => {
+        console.log(error)
+      })
     },
-
-    // async login () {
-    //   let loginRequest = { "credentials": { "_id": this.staffId, "password": this.password } }
-    //   this.loginInfo = await LoginService.authenticate(loginRequest).then(response => {
-    //     return response.data.data
-    //   }).catch(error => {
-    //     console.log(error)
-    //   })
-
-    //   if (this.loginInfo.success) {
-    //     //localStorage.setItem('login-info', JSON.stringify(this.loginInfo))
-    //     this.$router.push('/')
-    //   } else if (this.loginInfo.success === false) {
-    //     alert("Username or password is not correct.")
-    //   }
-    // },
-
+    async login () {
+      let loginRequest = { "credentials": { "_id": this.staffId, "password": this.password } }
+      this.loginInfo = await LoginService.authenticate(loginRequest).then(response => {
+        return response.data.data
+      }).catch(error => {
+        console.log(error)
+      })
+      if (this.loginInfo.success) {
+        localStorage.setItem('login-info', JSON.stringify(this.loginInfo))
+        this.$router.push('/')
+      } else if (this.loginInfo.success === false) {
+        alert("Username or password is not correct.")
+      }
+    },
     documentClick(e) {
       let el = this.$refs.dropdownMenu
       let target = e.target
@@ -70,15 +69,12 @@ export default {
       }
     }
   },
-
   created () {
     document.addEventListener('click', this.documentClick)
   },
-
   destroyed () {
     document.removeEventListener('click', this.documentClick)
   }
-
 }
 </script>
 
@@ -107,7 +103,6 @@ li {
     padding: 8px 16px;
     text-decoration: none;
 }
-
 /* Change the link color on hover */
 li:hover {
     background-color: #555;
@@ -115,4 +110,3 @@ li:hover {
     cursor: pointer;
 }
 </style>
-

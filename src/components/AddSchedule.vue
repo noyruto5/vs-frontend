@@ -5,7 +5,7 @@
         <tr>
           <td>Employee</td>
           <td class="td-input">
-            <input type="text" id='staff_name' class="form-control" v-model="staff_name" required/>
+            <input type="text" id='staff_name' class="form-control" v-model="staff_name" disabled required/>
           </td>
         </tr>
         <tr>
@@ -35,7 +35,7 @@ export default {
   name: 'AddSchedule',
   data () {
     return {
-      staff_id: 172,
+      staff_id: null,
       staff_name: '',
       title: '',
       date: '',
@@ -58,15 +58,22 @@ export default {
       }
 
       this.$store.dispatch('addSchedule', newProduct).then(() => {
-        this.staff_name = ''
         this.title = ''
         this.date = ''
         this.time_from = ''
         this.time_to = ''
 
+        alert('New record successfully added.')
         this.$store.dispatch('getSchedules')
       })
     }
+  },
+
+  created () {
+    const loginInfo = JSON.parse(localStorage.getItem('login-info'))
+    this.staff_id = loginInfo.user._id
+    this.staff_name = loginInfo.user.name
+
   }
 }
 </script>

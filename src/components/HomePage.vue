@@ -24,6 +24,12 @@ export default {
   components: {
     'add-schedule': AddSchedule,
     'schedule-list': ScheduleList
+  },
+
+  created () {
+    if (!localStorage.getItem('login-info')) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

@@ -20,6 +20,10 @@
             <td>{{ formattedDate(schedule.date) }}</td>
             <td>{{ schedule.time_from }} - {{ schedule.time_to}}</td>
             <td>{{ schedule.title }}</td>
+            <td>
+              <span class="fa fa-edit" @click="selectItem(index)"></span>&nbsp;
+              <span class="fa fa-remove"></span>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -35,13 +39,17 @@ export default {
   data () {
     return {
       loading: true,
+      selectedItem: null
     }
   },
 
   methods: {
     formattedDate: function(date) {
       return moment(new Date(date)).format('MM/DD/YY')
-    }
+    },
+    selectItem: function(index) {
+      this.selectedItem =  this.schedules[index]
+    },
   },
 
   created () {
@@ -56,3 +64,18 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.fa-edit {
+  color: green;
+}
+.fa-edit:hover {
+  cursor: pointer;
+}
+.fa-remove {
+  color: red;
+}
+.fa-remove:hover {
+  cursor: pointer;
+}
+</style>
