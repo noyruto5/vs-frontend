@@ -5,7 +5,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from '@/store/index'
-import loginStore from '@/store/login'
 
 Vue.config.productionTip = false
 
@@ -16,6 +15,5 @@ new Vue({
   el: '#app',
   router,
   store,
-  loginStore,
   render: h => h(App)
 })

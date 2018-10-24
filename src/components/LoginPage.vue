@@ -75,12 +75,6 @@ export default {
     document.addEventListener('click', this.documentClick)
   },
 
-  // computed: {
-  //   staffInfo () {
-  //     return this.$loginStore.state.staffInfo
-  //   }
-  // },
-
   destroyed () {
     document.removeEventListener('click', this.documentClick)
   }
