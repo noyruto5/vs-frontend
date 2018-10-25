@@ -37,6 +37,12 @@ export default new Vuex.Store({
       }))
     },
 
+    async deleteSchedule (context, _id) {
+      context.commit('removeSchedule', await ScheduleService.deleteSchedule(_id).then(response => {
+        return response.data.data.success
+      }))
+    },
+
     setSelectedSchedule (context, scheduleId) {
       context.commit('selectedSchedule', scheduleId)
     }
@@ -54,6 +60,9 @@ export default new Vuex.Store({
     },
 
     editSchedule (state) {
+    },
+
+    removeSchedule (state) {
     },
 
     selectedSchedule (state, scheduleId) {

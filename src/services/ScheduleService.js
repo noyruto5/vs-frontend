@@ -9,5 +9,8 @@ export default {
   },
   updateSchedule (params) {
     return Api().put('api/schedule/', params)
+  },
+  deleteSchedule (params) {
+    return Api().delete('api/schedule/?_id=' + params)
   }
 }

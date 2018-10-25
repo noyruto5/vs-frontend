@@ -23,7 +23,7 @@
             <td>{{ schedule.title }}</td>
             <td>
               <span class="fa fa-edit" @click="selectSchedule(schedule._id)"></span>&nbsp;
-              <span class="fa fa-remove"></span>
+              <span class="fa fa-remove" @click="deleteSchedule(schedule._id)"></span>
             </td>
           </tr>
         </tbody>
@@ -49,6 +49,15 @@ export default {
       this.$store.dispatch('setSelectedSchedule', id)
       this.$router.push('/update')
     },
+
+    deleteSchedule: function(id) {
+      let doDelete = confirm("Do you want to delete this schedule?");
+      if (doDelete) {
+        this.$store.dispatch('deleteSchedule', id).then(() => {
+          this.$store.dispatch('getSchedules')
+        })
+      }
+    }
   },
 
   created () {
