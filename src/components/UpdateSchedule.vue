@@ -6,7 +6,7 @@
           <tr>
             <td>Employee</td>
             <td class="td-input">
-              <input type="text" id='staff_name' class="form-control" v-model=selectedSchedule.staff_name disabled required/>
+              <input type="text" id='staff_name' class="form-control" v-bind:value=selectedSchedule.staff_name disabled required/>
             </td>
           </tr>
           <tr>
@@ -15,15 +15,53 @@
           </tr>
           <tr>
             <td>Date</td>
-            <td><input type="date" id='date' class="form-control" v-model=selectedSchedule.date required/></td>
+            <td>
+              <vue-ctk-date-time-picker
+                v-model=selectedSchedule.date
+                :dark="darkMode"
+                format="YYYY-MM-DD"
+                color="#287696"
+                formatted="ddd D MMM YYYY"
+                label="Choose date"
+                disable-time
+              />
+            </td>
           </tr>
           <tr>
-            <td>Time&nbsp;From</td>
-            <td><input type="text" id='time_from' class="form-control" v-model="selectedSchedule.time_from" required></td>
-          </tr>
-          <tr>
-            <td>Time&nbsp;To</td>
-            <td><input type="text" id='time_to' class="form-control" v-model="selectedSchedule.time_to" required/></td>
+            <td>Time</td>
+            <td>
+              <tr>
+                <td>
+                  <vue-ctk-date-time-picker
+                    id="time_from"
+                    v-model=selectedSchedule.time_from
+                    :minute-interval="minuteInterval2"
+                    :disabled="false"
+                    :dark="darkMode"
+                    formatted="hh:mm a"
+                    format="HH:mm"
+                    time-format="hh:mm a"
+                    label="Choose time"
+                    disable-date
+                  />
+                </td>
+                <td>&tilde;</td>
+                <td>
+                  <vue-ctk-date-time-picker
+                    id="time_to"
+                    v-model=selectedSchedule.time_to
+                    :minute-interval="minuteInterval2"
+                    :disabled="false"
+                    :dark="darkMode"
+                    formatted="hh:mm a"
+                    format="HH:mm"
+                    time-format="hh:mm a"
+                    label="Choose time"
+                    disable-date
+                  />
+                </td>
+              </tr>
+            </td>
           </tr>
         </body>
       </table>
@@ -33,9 +71,15 @@
 </template>
 
 <script>
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css'
+
 export default {
   name: 'UpdateSchedule',
   props: ['selectedSchedule'],
+  components: {
+    VueCtkDateTimePicker
+  },
   data () {
     return {
     }
@@ -55,13 +99,13 @@ export default {
 <style scoped>
 table {
   margin: auto;
-  width: 400px;
+  width: 500px;
 }
 table td {
   padding: 5px;
 }
 .td-input {
-  width: 500px;
+  width: 400px;
 }
 #btn-add {
   margin-top: 10px;

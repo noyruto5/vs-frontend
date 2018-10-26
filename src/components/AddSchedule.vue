@@ -6,7 +6,7 @@
           <tr>
             <td>Employee</td>
             <td class="td-input">
-              <input type="text" id='staff_name' class="form-control" v-model="staff_name" disabled required/>
+              <input type="text" id='staff_name' class="form-control" v-bind:value="staff_name" disabled required/>
             </td>
           </tr>
           <tr>
@@ -15,15 +15,53 @@
           </tr>
           <tr>
             <td>Date</td>
-            <td><input type="date" id='date' class="form-control" v-model="date" required/></td>
+            <td>
+              <vue-ctk-date-time-picker
+                v-model="date"
+                :dark="darkMode"
+                format="YYYY-MM-DD"
+                color="#287696"
+                formatted="ddd D MMM YYYY"
+                label="Choose date"
+                disable-time
+              />
+            </td>
           </tr>
           <tr>
-            <td>Time&nbsp;From</td>
-            <td><input type="text" id='time_from' class="form-control" v-model="time_from" required></td>
-          </tr>
-          <tr>
-            <td>Time&nbsp;To</td>
-            <td><input type="text" id='time_to' class="form-control" v-model="time_to" required/></td>
+            <td>Time</td>
+            <td>
+              <tr>
+                <td>
+                  <vue-ctk-date-time-picker
+                    id="time_from"
+                    v-model="time_from"
+                    :minute-interval="minuteInterval2"
+                    :disabled="false"
+                    :dark="darkMode"
+                    formatted="hh:mm a"
+                    format="HH:mm"
+                    time-format="hh:mm a"
+                    label="Choose time"
+                    disable-date
+                  />
+                </td>
+                <td>&tilde;</td>
+                <td>
+                  <vue-ctk-date-time-picker
+                    id="time_to"
+                    v-model="time_to"
+                    :minute-interval="minuteInterval2"
+                    :disabled="false"
+                    :dark="darkMode"
+                    formatted="hh:mm a"
+                    format="HH:mm"
+                    time-format="hh:mm a"
+                    label="Choose time"
+                    disable-date
+                  />
+                </td>
+              </tr>
+            </td>
           </tr>
         </body>
       </table>
@@ -33,16 +71,23 @@
 </template>
 
 <script>
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.min.css'
+
 export default {
   name: 'AddSchedule',
+  components: {
+    VueCtkDateTimePicker
+  },
   data () {
     return {
       staff_id: null,
       staff_name: '',
       title: '',
-      date: '',
-      time_from: '',
-      time_to: '',
+      date: new Date(),
+      time_from: '08:00',
+      time_to: '18:00',
+      email: '',
       success: false
     }
   },
@@ -56,14 +101,16 @@ export default {
         title: this.title,
         date: this.date,
         time_from: this.time_from,
-        time_to: this.time_to
+        time_to: this.time_to,
+        email: this.email,
+        timezone_offset: new Date().getTimezoneOffset()
       }
 
       this.$store.dispatch('addSchedule', newProduct).then(() => {
         this.title = ''
-        this.date = ''
-        this.time_from = ''
-        this.time_to = ''
+        this.date = new Date(),
+        this.time_from = '08:00',
+        this.time_to = '18:00',
 
         alert('New record successfully added.')
         this.$store.dispatch('getSchedules')
@@ -75,6 +122,7 @@ export default {
     const loginInfo = JSON.parse(localStorage.getItem('login-info'))
     this.staff_id = loginInfo.user._id
     this.staff_name = loginInfo.user.name
+    this.email = loginInfo.user.email_pc
   }
 }
 </script>
@@ -82,13 +130,13 @@ export default {
 <style scoped>
 table {
   margin: auto;
-  width: 400px;
+  width: 500px;
 }
 table td {
   padding: 5px;
 }
 .td-input {
-  width: 500px;
+  width: 400px;
 }
 #btn-add {
   margin-top: 10px;
