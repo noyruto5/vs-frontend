@@ -5,7 +5,7 @@
     </section> -->
     <section>
       <div v-if="loading">Loading...</div>
-      <table v-else class="table table-hover">
+      <table v-else class="table table-hover table-striped table-dark">
         <thead>
           <tr>
             <th>Name</th>
@@ -23,7 +23,7 @@
             <td>{{ schedule.title }}</td>
             <td>
               <span class="fa fa-edit" @click="selectSchedule(schedule._id)"></span>&nbsp;
-              <span class="fa fa-remove" @click="deleteSchedule(schedule._id)"></span>
+              <span class="fa fa-remove" @click="deleteSchedule(schedule._id, schedule.event_id)"></span>
             </td>
           </tr>
         </tbody>
@@ -50,10 +50,10 @@ export default {
       this.$router.push('/update')
     },
 
-    deleteSchedule: function(id) {
+    deleteSchedule: function(_id, event_id) {
       let doDelete = confirm("Do you want to delete this schedule?");
       if (doDelete) {
-        this.$store.dispatch('deleteSchedule', id).then(() => {
+        this.$store.dispatch('deleteSchedule', { _id, event_id}).then(() => {
           this.$store.dispatch('getSchedules')
         })
       }
@@ -75,7 +75,7 @@ export default {
 
 <style scoped>
 .fa-edit {
-  color: green;
+  color: yellowgreen;
 }
 .fa-edit:hover {
   cursor: pointer;

@@ -20,7 +20,9 @@ export default new Vuex.Store({
 
   actions: { // = methods
     async getSchedules ({commit}) {
-      commit('setSchedules', await ScheduleService.fetchSchedules().then(response => {
+      const loginInfo = JSON.parse(localStorage.getItem('login-info'))
+      let email = loginInfo.user.email_pc
+      commit('setSchedules', await ScheduleService.fetchSchedules(email).then(response => {
         return response.data.schedules
       }))
     },
@@ -37,8 +39,8 @@ export default new Vuex.Store({
       }))
     },
 
-    async deleteSchedule (context, _id) {
-      context.commit('removeSchedule', await ScheduleService.deleteSchedule(_id).then(response => {
+    async deleteSchedule (context, ids) {
+      context.commit('removeSchedule', await ScheduleService.deleteSchedule(ids).then(response => {
         return response.data.data.success
       }))
     },

@@ -1,8 +1,8 @@
 import Api from '@/services/Api'
 
 export default {
-  fetchSchedules () {
-    return Api().get('api/schedule/all')
+  fetchSchedules (email) {
+    return Api().get('api/schedule/all/?email=' + email)
   },
   addSchedule (params) {
     return Api().post('api/schedule/', params)
@@ -10,7 +10,7 @@ export default {
   updateSchedule (params) {
     return Api().put('api/schedule/', params)
   },
-  deleteSchedule (params) {
-    return Api().delete('api/schedule/?_id=' + params)
+  deleteSchedule (ids) {
+    return Api().delete('api/schedule/?_id=' +ids._id + '&event_id=' + ids.event_id)
   }
 }

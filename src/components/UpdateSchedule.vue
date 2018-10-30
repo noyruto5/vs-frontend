@@ -87,6 +87,7 @@ export default {
 
   methods: {
     updateSchedule() {
+      this.selectedSchedule.timezone_offset = new Date().getTimezoneOffset()
       this.$store.dispatch('updateSchedule', this.selectedSchedule).then(() => {
         alert('Record successfully updated.')
         this.$router.push('/')
